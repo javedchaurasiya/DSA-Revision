@@ -1,39 +1,44 @@
-class Solution {
+class Solution
+{
 public:
-    
     vector<vector<string>> ans;
     vector<string> res;
-    
-    bool isPal(string& s,int i,int j)
+
+    bool check(string &s)
     {
-        while(i<j)if(s[i++]!=s[j--])return 0;
+        int i = 0, j = s.size() - 1;
+        while (i < j)
+        {
+            if (s[i++] != s[j--])
+                return 0;
+        }
         return 1;
     }
-    
-    void fun(string& s,int ind)
+
+    void fun(string &s, int ind)
     {
-        if(ind>=s.size())
+        if (ind == s.size())
         {
             ans.push_back(res);
             return;
         }
-        for(int i=ind;s[i];i++)
+        string x = "";
+        for (int i = ind; s[i]; i++)
         {
-            if(isPal(s,ind,i))
+            x += s[i];
+            if (check(x))
             {
-                res.push_back(s.substr(ind,i-ind+1));
-                fun(s,i+1);
+                res.push_back(x);
+                fun(s, i + 1);
                 res.pop_back();
             }
         }
         return;
     }
-    
-    vector<vector<string>> partition(string s) {
-        
-        fun(s,0);
-        
+
+    vector<vector<string>> partition(string s)
+    {
+        fun(s, 0);
         return ans;
-        
     }
 };
